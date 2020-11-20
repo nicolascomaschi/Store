@@ -20,6 +20,7 @@ namespace Store.Backend
 {
     public class Startup
     {
+        readonly string cors = "cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +31,13 @@ namespace Store.Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: cors,
+                                  builder => {
+                                      builder.WithOrigins("*");
+                                  });
+            });
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
@@ -98,7 +106,7 @@ namespace Store.Backend
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(cors);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
