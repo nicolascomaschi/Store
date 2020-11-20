@@ -25,9 +25,11 @@ namespace Store.Backend.Controllers.API
         public AccountController(
             IUserRepository userRepository,
             IOrderRepository orderRepository)
+            //IConverterHelper converterHelper)
         {
             _userRepository = userRepository;
             _orderRepository = orderRepository;
+            //_converterHelper = converterHelper;
         }
 
         //[HttpPost]
